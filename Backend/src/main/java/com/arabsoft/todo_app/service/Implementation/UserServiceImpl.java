@@ -2,7 +2,7 @@ package com.arabsoft.todo_app.service.Implementation;
 
 import com.arabsoft.todo_app.dao.entities.User;
 import com.arabsoft.todo_app.dao.repository.UserRepository;
-import com.arabsoft.todo_app.service.Interface.userService;
+import com.arabsoft.todo_app.service.Interface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class UserServiceImpl implements userService, UserDetailsService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
 

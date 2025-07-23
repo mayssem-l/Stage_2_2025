@@ -1,7 +1,6 @@
 package com.arabsoft.todo_app.util.jwt;
 
 import com.arabsoft.todo_app.service.Implementation.UserServiceImpl;
-import com.arabsoft.todo_app.service.Interface.userService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
