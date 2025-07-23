@@ -1,0 +1,81 @@
+<form #taskForm="ngForm" (ngSubmit)="onSubmit()" class="task-form-container">
+  <input type="hidden" [(ngModel)]="task.taskId" name="task_id">
+
+  <!-- Titre -->
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input id="title" type="text" [(ngModel)]="task.title" name="title" #title="ngModel" required minlength="3" />
+    @if (title.invalid && title.touched) {
+      <div class="error">
+        @if (title.errors?.['required']) {
+          <small>Title is required.</small>
+        }
+        @if (title.errors?.['minlength']) {
+          <small>Minimum 3 characters.</small>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Description -->
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input id="description" type="text" [(ngModel)]="task.description" name="description" #description="ngModel" required />
+    @if (description.invalid && description.touched) {
+      <div class="error">
+        <small>Description is required.</small>
+      </div>
+    }
+  </div>
+
+  <!-- Status -->
+  <div class="form-group">
+    <label for="status">Status</label>
+    <select id="status" [(ngModel)]="task.status" name="status" #status="ngModel" required>
+      <option value="">-- Select Status --</option>
+      <option value="TODO">TODO</option>
+      <option value="IN_PROGRESS">IN_PROGRESS</option>
+      <option value="DONE">DONE</option>
+    </select>
+    @if (status.invalid && status.touched) {
+      <div class="error">
+        <small>Status is required.</small>
+      </div>
+    }
+  </div>
+
+  <!-- Catégorie -->
+  <div class="form-group">
+    <label for="category">Category</label>
+    <select id="category" [(ngModel)]="task.category" name="category" #category="ngModel" required>
+      <option value="">-- Select Category --</option>
+      <option value="WORK">WORK</option>
+      <option value="PERSONAL">PERSONAL</option>
+      <option value="HEALTH">HEALTH</option>
+      <option value="SHOPPING">SHOPPING</option>
+    </select>
+    @if (category.invalid && category.touched) {
+      <div class="error">
+        <small>Category is required.</small>
+      </div>
+    }
+  </div>
+
+  <!-- Date limite -->
+  <div class="form-group">
+    <label for="dueDate">Due Date</label>
+    <input id="dueDate" type="datetime-local" [(ngModel)]="task.dueDate" name="due_date" #dueDate="ngModel" required />
+    @if (dueDate.invalid && dueDate.touched) {
+      <div class="error">
+        <small>Due date is required.</small>
+      </div>
+    }
+  </div>
+
+  <!-- Bouton -->
+  <div class="form-buttons">
+    <button type="submit" class="btn-primary" [disabled]="taskForm.invalid">
+      {{ isEditMode ? 'Update Task' : 'Add Task' }}
+    </button>
+  </div>
+</form>

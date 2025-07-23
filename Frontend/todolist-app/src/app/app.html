@@ -1,0 +1,18 @@
+<main class="main">
+  <app-top-toolbar/>
+
+
+  <div class="main-body">
+    @if (!isAdmin) {
+      <app-task-list/>
+      <app-login/>
+      <app-register/>
+
+    } @else {
+      <app-user-list/>
+    }
+
+  </div>
+</main>
+<router-outlet/>
+

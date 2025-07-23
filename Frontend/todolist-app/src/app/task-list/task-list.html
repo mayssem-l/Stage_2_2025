@@ -1,0 +1,39 @@
+<div class="task-list-wrapper">
+  <app-sidenav [categories]="categories" />
+  <div class="task-list-body">
+    <button (click)="addNewTask()">Add New Task</button>
+
+    <!-- Zone floutable -->
+    <div [class.blurred]="showModal" class="task-list-content">
+      @for (task of tasks; track task.taskId) {
+        <div class="task-item">
+          <h3>{{ task.title }}</h3>
+          <p>Status: {{ task.status }}</p>
+          <p>Description: {{ task.description }}</p>
+          <p>Category: {{ task.category }}</p>
+          <p>Due: {{ task.dueDate | date:'short' }}</p>
+          <div class="button-group">
+            <button class="edit-button" (click)="editTask(task)">Edit</button>
+            <button class="delete-button" (click)="deleteTask(task.taskId!)">Delete</button>
+          </div>
+        </div>
+      }
+    </div>
+
+    @if (showModal) {
+      <div class="modal">
+        <div class="modal-content">
+          <app-task-form
+            [task]="selectedTask || { taskId: 0, title: '', description: '', status: 'TODO', category: 'WORK', dueDate: '' }"
+            [isEditMode]="isEditMode"
+            (onSave)="onTaskSaved()">
+          </app-task-form>
+          <button (click)="closeModal()">Close</button>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+
+

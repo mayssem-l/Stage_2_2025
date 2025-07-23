@@ -1,0 +1,31 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+
+  <label for="firstname">Prénom</label>
+  <input type="text" id="firstname" formControlName="firstname" placeholder="Entrez votre prénom" />
+
+  <label for="lastname">Nom</label>
+  <input type="text" id="lastname" formControlName="lastname" placeholder="Entrez votre nom" />
+
+  <label for="username">Nom d'utilisateur</label>
+  <input type="text" id="username" formControlName="username" placeholder="Nom d'utilisateur" />
+
+  <label for="email">Email</label>
+  <input type="email" id="email" formControlName="email" placeholder="Entrez votre email" />
+
+  <label for="password">Mot de passe</label>
+  <input type="password" id="password" formControlName="password" placeholder="Mot de passe" />
+
+  <label for="confirmPassword">Confirmez le mot de passe</label>
+  <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Répétez le mot de passe" />
+
+  @if (registerError) {
+    <p class="error-message">Une erreur est survenue. Vérifiez les champs.</p>
+  }
+
+  @if (passwordMismatch) {
+    <p class="error-message">Les mots de passe ne correspondent pas.</p>
+  }
+
+  <button type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
+</form>
+
