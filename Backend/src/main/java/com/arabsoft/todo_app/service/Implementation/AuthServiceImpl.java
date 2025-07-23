@@ -37,7 +37,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void register(User user) throws Exception {
-
         if (userService.getUserByUsername(user.getUsername()) != null) {
             throw new Exception("Username already exists");
         }
