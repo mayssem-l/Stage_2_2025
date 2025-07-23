@@ -2,8 +2,12 @@ package com.arabsoft.todo_app.service.Implementation;
 
 import com.arabsoft.todo_app.dao.entities.User;
 import com.arabsoft.todo_app.dao.repository.UserRepository;
-import com.arabsoft.todo_app.service.Interface.UserService;
+import com.arabsoft.todo_app.service.Interface.userService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -11,14 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements userService, UserDetailsService {
 
     private final UserRepository userRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-
     }
 
     @Override
@@ -49,5 +52,19 @@ public class UserServiceImpl implements UserService {
     }
     public User saveUser(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+                if (user == null) {
+                    throw new UsernameNotFoundException("User \""+username+"\" not found");
+                }
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(), // must be already encoded
+                List.of(new SimpleGrantedAuthority("ROLE_USER"))
+        );
     }
 }

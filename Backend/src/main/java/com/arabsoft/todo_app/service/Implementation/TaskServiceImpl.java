@@ -2,10 +2,8 @@ package com.arabsoft.todo_app.service.Implementation;
 
 import com.arabsoft.todo_app.dao.entities.Task;
 import com.arabsoft.todo_app.dao.entities.TaskCategory;
-import com.arabsoft.todo_app.dao.entities.TaskStatus;
 import com.arabsoft.todo_app.dao.repository.TaskRepository;
 import com.arabsoft.todo_app.service.Interface.TaskService;
-import com.arabsoft.todo_app.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

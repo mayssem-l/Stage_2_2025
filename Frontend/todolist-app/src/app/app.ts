@@ -24,5 +24,5 @@ import {Register} from './register/register';
 })
 export class App {
   protected title = 'todolist-app';
-  protected isAdmin = true;
+  protected isAdmin = false;
 }

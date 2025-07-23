@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Table(name = "task")
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long taskId;
     private String title;
     private String description;

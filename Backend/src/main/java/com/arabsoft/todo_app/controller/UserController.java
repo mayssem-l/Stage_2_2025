@@ -1,8 +1,7 @@
 package com.arabsoft.todo_app.controller;
 
-import com.arabsoft.todo_app.dao.entities.Task;
 import com.arabsoft.todo_app.dao.entities.User;
-import com.arabsoft.todo_app.service.Interface.UserService;
+import com.arabsoft.todo_app.service.Interface.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +12,10 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+    private final userService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(userService userService) {
         this.userService = userService;
     }
 
