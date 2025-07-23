@@ -6,7 +6,6 @@ import com.arabsoft.todo_app.util.jwt.JWTService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,12 +37,14 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void register(User user) throws Exception {
-        try {
-            this.userService.loadUserByUsername(user.getUsername());
-        } catch (UsernameNotFoundException e) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userService.saveUser(user);
+
+        if (userService.getUserByUsername(user.getUsername()) != null) {
+            throw new Exception("Username already exists");
         }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userService.saveUser(user);
+
     }
 
 }
