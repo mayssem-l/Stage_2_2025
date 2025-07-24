@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import { DataService } from '../../services/data-service';
-import {User} from '../../models/User';
+import { DataService } from '../../../services/data-service';
+import {User} from '../../../models/User';
 @Component({
   selector: 'app-user-form',
   imports: [

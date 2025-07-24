@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Task } from '../../models/Task';
-import { DataService } from '../../services/data-service';
+import { Task } from '../../../models/Task';
+import { DataService } from '../../../services/data-service';
 import {FormsModule} from '@angular/forms';
 @Component({
   selector: 'app-task-form',

@@ -12,17 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final AuthService authService;
@@ -44,15 +46,28 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
-        try{
+        try {
             this.authService.register(user);
             return ResponseEntity.ok(Map.of("message", "User registered successfully"));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             return ResponseEntity.ok(Map.of("error", "User could not be registered"));
         }
+    }
 
-
+    @GetMapping("/validate")
+    public ResponseEntity<?> validateToken(Authentication authentication) {
+        try {
+            Collection<? extends GrantedAuthority> roles = authentication.getAuthorities();
+            ArrayList<String> rolesList = new ArrayList<>();
+            roles.forEach(role -> rolesList.add(role.toString().replace("ROLE_", "")));
+            return ResponseEntity.ok(Map.of(
+                    "username", authentication.getName(),
+                    "roles", rolesList
+            ));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of("message", "Authentication required"));
+        }
     }
 }

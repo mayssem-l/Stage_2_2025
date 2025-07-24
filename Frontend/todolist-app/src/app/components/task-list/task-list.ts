@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Task} from '../../models/Task';
-import {DataService} from '../../services/data-service';
+import {Task} from '../../../models/Task';
+import {DataService} from '../../../services/data-service';
 import {DatePipe} from '@angular/common';
 import {TaskForm} from '../task-form/task-form';
 import {Sidenav} from '../sidenav/sidenav';

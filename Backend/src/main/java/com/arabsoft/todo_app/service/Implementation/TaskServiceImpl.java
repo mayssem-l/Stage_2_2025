@@ -1,10 +1,14 @@
 package com.arabsoft.todo_app.service.Implementation;
 
 import com.arabsoft.todo_app.dao.entities.Task;
+import com.arabsoft.todo_app.dao.entities.User;
 import com.arabsoft.todo_app.dao.entities.TaskCategory;
 import com.arabsoft.todo_app.dao.repository.TaskRepository;
 import com.arabsoft.todo_app.service.Interface.TaskService;
+import com.arabsoft.todo_app.service.Interface.UserService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -14,9 +18,11 @@ import java.util.stream.Collectors;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+    private final UserService userService;
 
     @Autowired
-    public TaskServiceImpl(TaskRepository taskRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository, UserService userService) {
+        this.userService = userService;
         this.taskRepository = taskRepository;
     }
 
@@ -33,10 +39,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<String> getCategories() {
         List<Integer> categoriesIds = taskRepository.getCategories();
-        List<String> categories = categoriesIds.stream()
+        return categoriesIds.stream()
                 .map(i -> TaskCategory.values()[i].name())
                 .collect(Collectors.toList());
-        return categories;
     }
 
     @Override
@@ -55,19 +60,30 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
-    //    public Task getTaskById(long id) {
-//        return taskRepository.findByTaskId(id);
-//    }
-//    public Task getTaskByStatus(TaskStatus status) {
-//        return taskRepository.findByStatus(status);
-//    }
-//    public Task getTaskByCategory(TaskCategory category) {
-//        return taskRepository.findByCategory(category);
-//    }
-    //create and update
     public Task saveTask(Task task) {
         return taskRepository.save(task);
     }
 
+    public Task assignTaskToUser(Long userId, @NotNull Task task) {
+        User user = userService.getUserById(userId);
+        if (user == null) {
+            throw new RuntimeException("User with userId: "+userId+" was not found");
+        }
+
+        task.setUser(user);
+        return taskRepository.save(task);
+    }
+
+    public void removeTaskFromUser(Long userId, Long taskId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        if (task.getUser() == null || task.getUser().getUserId() != userId) {
+            throw new RuntimeException("Task does not belong to the specified user");
+        }
+
+        taskRepository.delete(task);
+        task.setUser(null);
+    }
 
 }

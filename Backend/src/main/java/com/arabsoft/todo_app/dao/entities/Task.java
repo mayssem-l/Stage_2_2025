@@ -1,4 +1,6 @@
 package com.arabsoft.todo_app.dao.entities;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -16,6 +18,9 @@ public class Task {
     private TaskCategory category;
     private LocalDateTime dueDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false) // FK to User table
+    private User user;
 
     public long getTaskId() {
         return taskId;
@@ -32,6 +37,7 @@ public class Task {
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getDescription() {
         return description;
     }
@@ -39,6 +45,7 @@ public class Task {
     public void setDescription(String description) {
         this.description = description;
     }
+
     public LocalDateTime getDueDate() {
         return dueDate;
     }
@@ -46,6 +53,7 @@ public class Task {
     public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
+
     public TaskStatus getStatus() {
         return status;
     }
@@ -62,5 +70,11 @@ public class Task {
         this.category = category;
     }
 
+    public User getUser() {
+        return user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

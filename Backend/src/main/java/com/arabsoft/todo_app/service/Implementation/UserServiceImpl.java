@@ -4,6 +4,7 @@ import com.arabsoft.todo_app.dao.entities.User;
 import com.arabsoft.todo_app.dao.repository.UserRepository;
 import com.arabsoft.todo_app.service.Interface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,26 +31,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Map<String, String> deleteUser(long userId) {
-        Map<String, String> response = new HashMap<>();
-        try {
-            userRepository.deleteById(userId);
-            response.put("message", "User has been deleted successfully");
-            response.put("userId", String.valueOf(userId));
-            return response;
-        }
-        catch (Exception e) {
-            System.err.println(e.getMessage());
-            response.put("error", "An error occurred while trying to delete the user");
-            response.put("userId", String.valueOf(userId));
-            return response;
-        }
-    }
-
-    @Override
     public User getUserById(long userId) {
         return userRepository.findById(userId).orElse(null);
     }
+
     public User saveUser(User user) {
         return userRepository.save(user);
     }
@@ -59,16 +44,36 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
+    public Map<String, String> deleteUser(long userId) {
+        Map<String, String> response = new HashMap<>();
+        try {
+            userRepository.deleteById(userId);
+            response.put("message", "User has been deleted successfully");
+            response.put("userId", String.valueOf(userId));
+            return response;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            response.put("error", "An error occurred while trying to delete the user");
+            response.put("userId", String.valueOf(userId));
+            return response;
+        }
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-                if (user == null) {
-                    throw new UsernameNotFoundException("User \""+username+"\" not found");
-                }
+
+        if (user == null) {
+            throw new UsernameNotFoundException("User \"" + username + "\" not found");
+        }
+
+        String roleName = "ROLE_" + user.getRole().name();
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
-                user.getPassword(), // must be already encoded
-                List.of(new SimpleGrantedAuthority("ROLE_USER"))
+                user.getPassword(),
+                List.of(new SimpleGrantedAuthority(roleName))
         );
     }
 }
