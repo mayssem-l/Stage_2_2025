@@ -1,0 +1,31 @@
+<div class="dashboard-container">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2 class="sidebar-title">Dashboard</h2>
+    <nav class="nav-links">
+      <a routerLink="/admin/users" routerLinkActive="active">
+        <i class="icon">&#128100;</i>
+        <span>Users</span>
+      </a>
+      <a routerLink="/admin/tasks" routerLinkActive="active">
+        <i class="icon">&#9989;</i>
+        <span>Tasks</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main section -->
+  <div class="main-section">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <h1 class="header-title">Admin Dashboard</h1>
+      <button class="logout-btn" (click)="onLogout()">Logout</button>
+    </header>
+
+    <!-- Content -->
+    <main class="main-content">
+
+    </main>
+  </div>
+</div>

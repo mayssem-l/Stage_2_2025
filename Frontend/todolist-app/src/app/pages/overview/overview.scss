@@ -1,0 +1,63 @@
+.overview-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f5f6fa;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.overview-header {
+  background-color: #1e1e2f;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .logout-button {
+    background-color: #d9534f;
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+      background-color: #c9302c;
+    }
+  }
+}
+
+.overview-content {
+  padding: 2rem;
+  flex: 1;
+
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .task-summary {
+    margin-top: 2rem;
+
+    h3 {
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+
+      li {
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+      }
+    }
+  }
+}

@@ -8,6 +8,8 @@ import { Login } from './components/login/login';
 import { Register } from './components/register/register';
 import { DataService } from '../services/data-service';
 import { UserRole } from '../enums/UserRoles';
+import {Dashboard} from './pages/dashboard/dashboard';
+import {Overview} from './pages/overview/overview';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +20,9 @@ import { UserRole } from '../enums/UserRoles';
     TaskList,
     UserList,
     Login,
-    Register
+    Register,
+    Dashboard,
+    Overview
 
   ],
   templateUrl: './app.html',
