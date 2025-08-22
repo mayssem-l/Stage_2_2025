@@ -19,13 +19,12 @@
   <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Répétez le mot de passe" />
 
   @if (registerError) {
-    <p class="error-message">Une erreur est survenue. Vérifiez les champs.</p>
+  <p class="error-message">Une erreur est survenue. Vérifiez les champs.</p>
   }
 
   @if (passwordMismatch) {
-    <p class="error-message">Les mots de passe ne correspondent pas.</p>
+  <p class="error-message">Les mots de passe ne correspondent pas.</p>
   }
 
   <button type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
 </form>
-

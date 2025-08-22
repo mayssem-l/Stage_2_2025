@@ -1,0 +1,58 @@
+.dialog-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  background-color: rgb(26, 39, 75);
+  gap: 60px;
+  .dialog-form-header {
+    .dialog-form-header-title {
+      padding-left: 16px;
+      font-size: 2.4rem;
+      font-weight: 600;
+    }
+  }
+  .dialog-form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .dialog-form-content-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 1.2rem;
+      span {
+        // height: 0;
+        color: rgb(173, 195, 255);
+        padding-left: 16px;
+        font-size: 12px;
+        font-weight: 400;
+        transition: opacity 200ms ease;
+        overflow: hidden;
+      }
+      input {
+        font-size: 1rem;
+        padding: 8px 16px;
+        border: 1px solid rgb(110, 124, 161);
+        border-radius: 20px;
+        background-color: transparent;
+      }
+    }
+  }
+  .dialog-form-footer {
+    display: flex;
+    justify-content: space-between;
+    // gap: 20px;
+    .dialog-form-action {
+      display: flex;
+      padding: 6px 16px;
+      //   background-color: rgb(255 255 255 / 10%);
+      border: 1px solid rgb(255 255 255 / 40%);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 200ms ease;
+      &:hover {
+        background-color: rgb(255 255 255 / 10%);
+      }
+    }
+  }
+}

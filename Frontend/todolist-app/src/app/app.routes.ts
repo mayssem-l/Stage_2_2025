@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from '../services/auth-guard';
-import { UserList } from './components/user-list/user-list';
-import { Login } from './components/login/login';
+import { AuthGuard } from './guards/auth-guard';
+import { Login } from './pages/login/login';
+import { Dashboard } from './pages/dashboard/dashboard';
+import { LoginRedirectGuard } from './guards/login-redirect-guard';
 
 export const routes: Routes = [
-  { path: 'user-list', component: UserList, canActivate: [AuthGuard] },
-  { path: 'login', component: Login },
-  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
+  { path: 'login', component: Login, canActivate: [LoginRedirectGuard] },
+  { path: 'dashboard', component: Dashboard }
 ];

@@ -1,0 +1,33 @@
+.dialog-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding: 20px 30px;
+  font-size: 1.2rem;
+
+  .dialog-header {
+    display: flex;
+    .dialog-header-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      padding-top: 10px;
+    }
+  }
+  .dialog-body {
+  }
+  .dialog-footer {
+    display: flex;
+    justify-content: space-between;
+    .dialog-action {
+      cursor: pointer;
+      background-color: rgb(255 255 255 / 10%);
+      border-radius: 30px;
+      padding: 6px 16px;
+      transition: background-color 200ms ease;
+
+      &:hover {
+        background-color: rgb(255 255 255 / 20%);
+      }
+    }
+  }
+}

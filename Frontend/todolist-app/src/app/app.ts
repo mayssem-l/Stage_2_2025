@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { TopToolbar } from './components/top-toolbar/top-toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { TaskList } from './components/task-list/task-list';
-import { UserList } from './components/user-list/user-list';
-import { Login } from './components/login/login';
+import { LoginForm } from './components/login-form/login-form';
 import { Register } from './components/register/register';
-import { DataService } from '../services/data-service';
-import { UserRole } from '../enums/UserRoles';
-import {Dashboard} from './pages/dashboard/dashboard';
-import {Overview} from './pages/overview/overview';
+import { DataService } from './services/data-service';
+import { UserRole } from './enums/UserRoles';
+import { Dashboard } from './pages/dashboard/dashboard';
+import { Overview } from './pages/overview/overview';
+import { AnimBg } from './components/anim-bg/anim-bg';
+import { BgLogin } from './components/anim-bg/bg-login/bg-login';
+import { AuthService } from './services/auth-service';
+import { DialogForm } from './components/dialog-form/dialog-form';
 
 @Component({
   selector: 'app-root',
@@ -17,13 +19,13 @@ import {Overview} from './pages/overview/overview';
     RouterOutlet,
     TopToolbar,
     MatIconModule,
-    TaskList,
-    UserList,
-    Login,
+    LoginForm,
     Register,
     Dashboard,
-    Overview
-
+    Overview,
+    AnimBg,
+    BgLogin,
+    DialogForm
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -34,27 +36,15 @@ export class App implements OnInit {
   protected isAdmin = false;
 
   constructor(
-    private dataService: DataService,
+    private authService: AuthService,
     private router: Router
   ) {
 
   }
 
   ngOnInit(): void {
-    this.dataService.validateToken()
-      .subscribe({
-        next: res => {
-          if (res.roles.includes(UserRole.ADMIN)) {
-            this.redirectToPage("/dashboard");
-          } else if (res.roles.includes(UserRole.USER)) {
-            this.redirectToPage("/overview");
-          }
-        },
-        error: () => this.redirectToPage("/login")
-      });
+    this.authService.validateToken();
   }
-
-
 
   redirectToPage(path: string) {
     return this.router.navigate([path]);

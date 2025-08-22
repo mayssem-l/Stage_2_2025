@@ -4,11 +4,12 @@ import com.arabsoft.todo_app.dao.entities.Task;
 import com.arabsoft.todo_app.dao.entities.User;
 import com.arabsoft.todo_app.dao.entities.TaskCategory;
 import com.arabsoft.todo_app.dao.repository.TaskRepository;
+import com.arabsoft.todo_app.dto.TaskDTO;
+import com.arabsoft.todo_app.dto.TaskRequest;
 import com.arabsoft.todo_app.service.Interface.TaskService;
 import com.arabsoft.todo_app.service.Interface.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -32,8 +33,12 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+    public List<TaskDTO> getAllTasks() {
+        return taskRepository
+                .findAll()
+                .stream()
+                .map(TaskDTO::fromEntity)
+                .toList();
     }
 
     @Override
@@ -64,10 +69,26 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.save(task);
     }
 
+    public Task saveTask(TaskRequest request){
+        System.out.println("Entering saveTask for TaskRequest");
+        User user = userService.getUserById(request.userId());
+        Task task = new Task();
+        if (request.taskId() != null) {
+            task.setTaskId(request.taskId());
+        }
+        task.setTitle(request.title());
+        task.setDescription(request.description());
+        task.setStatus(request.status());
+        task.setCategory(request.category());
+        task.setDueDate(request.dueDate());
+        task.setUser(user);
+        return taskRepository.save(task);
+    }
+
     public Task assignTaskToUser(Long userId, @NotNull Task task) {
         User user = userService.getUserById(userId);
         if (user == null) {
-            throw new RuntimeException("User with userId: "+userId+" was not found");
+            throw new RuntimeException("User with userId: " + userId + " was not found");
         }
 
         task.setUser(user);

@@ -1,0 +1,5 @@
+export class Util {
+    public static capitalize(input: string) {
+        return input[0].toUpperCase() + input.slice(1);
+    }
+}

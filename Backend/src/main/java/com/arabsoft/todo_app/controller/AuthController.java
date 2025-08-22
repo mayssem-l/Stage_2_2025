@@ -7,8 +7,10 @@ import com.arabsoft.todo_app.dto.RegisterRequest;
 import com.arabsoft.todo_app.service.Implementation.UserServiceImpl;
 import com.arabsoft.todo_app.service.Interface.AuthService;
 import com.arabsoft.todo_app.service.Interface.TaskService;
+import com.arabsoft.todo_app.service.Interface.UserService;
 import com.arabsoft.todo_app.util.jwt.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,10 +30,12 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+    private final UserService userService;
 
     @Autowired
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, UserService userService) {
         this.authService = authService;
+        this.userService = userService;
     }
 
     @PostMapping("/login")
@@ -40,8 +44,9 @@ public class AuthController {
         String password = request.password();
 
         String token = this.authService.login(username, password);
+        User user = userService.getUserByUsername(username);
 
-        return ResponseEntity.ok(new AuthResponse(token));
+        return ResponseEntity.ok(new AuthResponse(token, user.getUserId()));
     }
 
     @PostMapping("/register")
@@ -67,7 +72,7 @@ public class AuthController {
             ));
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return ResponseEntity.badRequest().body(Map.of("message", "Authentication required"));
+            return new ResponseEntity<>(Map.of("message", "Authentication required"), HttpStatusCode.valueOf(401));
         }
     }
 }

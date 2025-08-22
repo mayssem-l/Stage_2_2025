@@ -1,0 +1,18 @@
+<div class="dialog-wrapper">
+    <div class="dialog-header">
+        <span class="dialog-header-title">{{this.data.title}}</span>
+    </div>
+    <div class="dialog-body">
+        <span>{{this.data.message}}</span>
+    </div>
+    <div class="dialog-footer">
+        @for (action of this.data.actions; track $index) {
+        <div class="dialog-action" (click)="action.onClick()">
+            @if (action.icon){
+            <mat-icon>{{action.icon}}</mat-icon>
+            }
+            <span>{{action.displayName}}</span>
+        </div>
+        }
+    </div>
+</div>

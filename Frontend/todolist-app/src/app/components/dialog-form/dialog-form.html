@@ -1,0 +1,24 @@
+<div class="dialog-form-wrapper">
+    <div class="dialog-form-header">
+        <span class="dialog-form-header-title">{{data.title}}</span>
+    </div>
+    <div class="dialog-form-content">
+        @for (field of data.fields; track $index) {
+        <div class="dialog-form-content-field">
+            <!-- <span [style]="{'opacity': field.value.length > 0? '1':'0', 'height': field.value.length > 0?  '20px':'0'}"> -->
+            <span>
+                {{field.displayName}}
+            </span>
+            <input type="text" value={{field.value}} (change)="onFieldValueChange($event, field)" [readOnly]="field.readonly"/>
+        </div>
+        }
+    </div>
+    <div class="dialog-form-footer">
+        @for (action of data.actions; track $index) {
+        <div class="dialog-form-action" (click)="action.onClick()">
+            @if(action.icon){<mat-icon>{{action.icon}}</mat-icon>}
+            <span>{{action.displayName}}</span>
+        </div>
+        }
+    </div>
+</div>

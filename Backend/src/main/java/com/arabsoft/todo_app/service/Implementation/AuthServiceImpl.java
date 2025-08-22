@@ -42,6 +42,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        System.out.println("user role: " + user.getRole());
         userService.saveUser(user);
 
     }

@@ -1,0 +1,36 @@
+@if (this.table.data.slice(1).length > 0) {
+<div class="table-wrapper" [style]="{ 'grid-template-columns': `repeat(${this.table.data[0].length+1}, auto)` }">
+  <div class="table-header">
+    @for (header of this.table.data[0]; track $index) {
+    <div class="table-cell table-header-cell">
+      <span>{{ header.toString() }}</span>
+    </div>
+    }
+    @if (this.table.entryActions) {
+    <div class="table-cell table-header-cell">
+      <span>Actions</span>
+    </div>
+    }
+  </div>
+  <div class="table-body">
+    @for (tableLine of this.table.data.slice(1); track $index) {
+    <div class="table-body-line">
+      @for (cell of tableLine; track $index) {
+      <div class="table-cell table-body-cell">
+        <span>{{ cell.toString() }}</span>
+      </div>
+      }
+      @if (this.table.entryActions) {
+      <div class="table-cell table-body-cell">
+        @for (action of this.table.entryActions; track $index) {
+        <div class="table-body-entry-action" (click)="action.onClick(tableLine)">
+          <mat-icon>{{action.icon}}</mat-icon>
+        </div>
+        }
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>
+}

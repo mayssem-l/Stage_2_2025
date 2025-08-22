@@ -1,6 +1,9 @@
 package com.arabsoft.todo_app.controller;
 
 import com.arabsoft.todo_app.dao.entities.Task;
+import com.arabsoft.todo_app.dto.TaskDTO;
+import com.arabsoft.todo_app.dto.TaskRequest;
+import com.arabsoft.todo_app.dto.TaskSummary;
 import com.arabsoft.todo_app.service.Interface.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -23,8 +26,7 @@ public class TaskController {
     }
 
     @GetMapping("/getAll")
-    public List<Task> getAllTasks(@AuthenticationPrincipal UserDetails user) {
-        System.out.println(user.getUsername());
+    public List<TaskDTO> getAllTasks(@AuthenticationPrincipal UserDetails user) {
         return taskService.getAllTasks();
     }
 
@@ -39,7 +41,7 @@ public class TaskController {
     }
 
     @PostMapping("/saveTask")
-    public Task saveTask(@RequestBody Task task) {
+    public Task saveTask(@RequestBody TaskRequest task) {
         return taskService.saveTask(task);
     }
 

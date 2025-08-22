@@ -2,6 +2,7 @@ package com.arabsoft.todo_app.service.Implementation;
 
 import com.arabsoft.todo_app.dao.entities.User;
 import com.arabsoft.todo_app.dao.repository.UserRepository;
+import com.arabsoft.todo_app.dto.UserSummary;
 import com.arabsoft.todo_app.service.Interface.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,8 +27,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserSummary> getAllUsers() {
+        return userRepository.findAllProjectedBy();
     }
 
     @Override
@@ -36,7 +37,33 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     public User saveUser(User user) {
+        System.out.println("=== Saving user with ID: " + user.getUserId()+" ===");
         return userRepository.save(user);
+    }
+
+    @Override
+    public User updateUser(User user) {
+        User oldUser = getUserById(user.getUserId());
+        if (oldUser == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        if (user.getFirstname() != null) {
+            oldUser.setFirstname(user.getFirstname());
+        }
+        if (user.getLastname() != null) {
+            oldUser.setLastname(user.getLastname());
+        }
+        if (user.getUsername() != null) {
+            oldUser.setUsername(user.getUsername());
+        }
+        if (user.getEmail() != null) {
+            oldUser.setEmail(user.getEmail());
+        }
+        if (user.getRole() != null) {
+            oldUser.setRole(user.getRole());
+        }
+
+        return userRepository.save(oldUser);
     }
 
     public User getUserByUsername(String username) {

@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import {DatePipe} from "@angular/common";
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: 'app-sidenav',
-    imports: [
-        DatePipe
-    ],
+  imports: [
+    DatePipe
+  ],
   templateUrl: './sidenav.html',
   styleUrl: './sidenav.scss'
 })
