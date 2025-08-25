@@ -14,6 +14,7 @@ import { TableConfig } from '../../types/TableConfig';
 import { DialogConfig } from '../../types/DialogConfig';
 import { Dialog } from '../../components/dialog/dialog';
 import { UserService } from '../../services/user-service';
+import { TaskService } from '../../services/task-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,7 +34,8 @@ export class Dashboard implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private userService: UserService
+    private userService: UserService,
+    private taskService: TaskService
   ) { }
 
   sidebarButtons = [
@@ -52,23 +54,8 @@ export class Dashboard implements OnInit {
 
   tableHeaders = {
     [DashboardContent.USER_LIST]: ["User ID", "First Name", "Last Name", "Username", "E-mail", "Role"],
-    [DashboardContent.TASK_LIST]: ["Task ID", "Title", "Description", "Status", "Category", "Due Date", "Username"]
+    [DashboardContent.TASK_LIST]: ["Task ID", "Title", "Description", "Status", "Category", "Due Date", "Username", "User ID"]
   }
-
-  addTaskDialogConfig: DialogFormConfig = {
-    title: "Add a Task",
-    fields: [
-      { displayName: "Title", internalName: "title", value: "" },
-      { displayName: "Description", internalName: "description", value: "" },
-      { displayName: "Category", internalName: "category", value: "" },
-      { displayName: "Status", internalName: "status", value: "" },
-      { displayName: "Due Date", internalName: "dueDate", value: "" },
-    ].map((entry, i) => ({ ...entry, id: i })),
-    actions: [
-      { displayName: "Cancel", internalName: "cancel", onClick: () => { this.closeDialog() } },
-      { displayName: "Confirm", internalName: "confirm", onClick: () => { this.addTask() } }
-    ].map((entry, i) => ({ ...entry, id: i }))
-  };
 
   ngOnInit(): void {
     this.updateTable();
@@ -86,6 +73,33 @@ export class Dashboard implements OnInit {
         this.userService.addUser(() => { this.updateTable() });
         break;
       case DashboardContent.TASK_LIST:
+        this.taskService.addTask(() => { this.updateTable() });
+        break;
+      default:
+        break;
+    }
+  }
+
+  onEditClick(entry: string[], onSuccess: () => unknown) {
+    switch (this.content) {
+      case DashboardContent.USER_LIST:
+        this.userService.editUser(entry, onSuccess);
+        break;
+      case DashboardContent.TASK_LIST:
+        this.taskService.editTask(entry, onSuccess);
+        break;
+      default:
+        break;
+    }
+  }
+
+  onDeleteClick(entry: string[], onSuccess: () => unknown) {
+    switch (this.content) {
+      case DashboardContent.USER_LIST:
+        this.userService.deleteUser(entry, onSuccess);
+        break;
+      case DashboardContent.TASK_LIST:
+        this.taskService.deleteTask(entry, onSuccess);
         break;
       default:
         break;
@@ -120,7 +134,7 @@ export class Dashboard implements OnInit {
         internalName: "edit",
         icon: "edit",
         onClick: (entry: unknown) => {
-          this.userService.editUser(entry as string[], () => { this.updateTable() });
+          this.onEditClick(entry as string[], () => { this.updateTable() });
         }
       },
       {
@@ -128,7 +142,7 @@ export class Dashboard implements OnInit {
         internalName: "delete",
         icon: "delete",
         onClick: (entry: unknown) => {
-          this.userService.deleteUser(entry as string[], () => { this.updateTable() });
+          this.onDeleteClick(entry as string[], () => { this.updateTable() });
         }
       },
     ].map((action, i) => ({ ...action, id: i }))
@@ -145,38 +159,6 @@ export class Dashboard implements OnInit {
       )
       .subscribe();
   }
-
-  addTask() {
-    let task: Task = {
-      title: "",
-      description: "",
-      category: "",
-      status: "",
-      dueDate: "",
-      userId: parseInt(localStorage.getItem("userId")!)
-    };
-
-    for (const field of this.addTaskDialogConfig.fields) {
-      const key = field.internalName as keyof User;
-      task = {
-        ...task,
-        [key]: field.value
-      };
-    }
-    this.dataService.saveTask(task)
-      .pipe(
-        concatMap(() => {
-          this.fetchData(this.content);
-          return of(null);
-        })
-      )
-      .subscribe({
-        next: () => {
-          this.closeDialog();
-        }
-      })
-  }
-
 
   onLogout() {
     console.log('Logout clicked');

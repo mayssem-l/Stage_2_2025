@@ -1,13 +1,12 @@
-import { inject, Injectable } from '@angular/core';
-import { DataService } from './data-service';
+import { Injectable } from '@angular/core';
 import { DialogFormConfig, Field } from '../types/DialogFormConfig';
 import { User } from '../models/User';
-import { concatMap, first, of, tap } from 'rxjs';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { DialogForm } from '../components/dialog-form/dialog-form';
-import { Dialog } from '../components/dialog/dialog';
-import { DialogConfig } from '../types/DialogConfig';
+import { first, tap } from 'rxjs';
+
 import { ToastrService } from 'ngx-toastr';
+import { DialogService } from './dialog-service';
+import { DataService } from './data-service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +16,9 @@ export class UserService {
 
   constructor(
     private dataService: DataService,
+    private dialogService: DialogService,
     private toaster: ToastrService
   ) { };
-
-  readonly dialog = inject(MatDialog);
-
-  dialogRef: MatDialogRef<Dialog | DialogForm> | null = null;
 
   addUserDialogConfig: DialogFormConfig = {
     title: "Add a User",
@@ -35,26 +31,9 @@ export class UserService {
       { displayName: "Role", internalName: "role", value: "" },
     ].map((entry, i) => ({ ...entry, id: i })),
     actions: [
-      { displayName: "Cancel", internalName: "cancel", onClick: () => { this.closeDialog() } },
+      { displayName: "Cancel", internalName: "cancel", onClick: () => { this.dialogService.closeDialog() } },
       { displayName: "Confirm", internalName: "confirm", onClick: () => { this.saveUser(this.addUserDialogConfig.fields) } }
     ].map((entry, i) => ({ ...entry, id: i }))
-  }
-
-  openDialog(data: DialogConfig) {
-    this.dialogRef = this.dialog.open(Dialog, {
-      data: data
-    })
-  }
-
-  openDialogForm(data: DialogFormConfig = this.addUserDialogConfig) {
-    this.dialogRef = this.dialog.open(DialogForm, {
-      width: "800px",
-      data: data
-    });
-  }
-
-  closeDialog() {
-    this.dialog.closeAll();
   }
 
   addUser(onSuccess?: () => unknown) {
@@ -63,7 +42,7 @@ export class UserService {
         this.saveUser(this.addUserDialogConfig.fields, onSuccess)
       }
     }
-    this.openDialogForm();
+    this.dialogService.openDialogForm(this.addUserDialogConfig);
   }
 
   saveUser(fields: Field[], onSuccess?: () => unknown) {
@@ -75,6 +54,7 @@ export class UserService {
         [key]: field.value
       };
     }
+    
     let method = this.dataService.saveUser(user);
 
     if (user.userId) {
@@ -84,7 +64,7 @@ export class UserService {
     return method
       .pipe(
         tap(() => {
-          this.dialogRef?.close("success");
+          this.dialogService.closeDialog("success");
           if (onSuccess) {
             onSuccess();
           }
@@ -108,11 +88,11 @@ export class UserService {
     userDetails.forEach((val, i) => {
       dialogConfig.fields[i].value = val;
     })
-    this.openDialogForm(dialogConfig);
+    this.dialogService.openDialogForm(dialogConfig);
   }
 
   deleteUser(userDetails: string[], onSuccess?: () => unknown) {
-    this.openDialog({
+    this.dialogService.openDialog({
       title: "Delete User",
       message: "Are you sure you want to permanently delete this user?",
       actions: [
@@ -120,7 +100,7 @@ export class UserService {
           displayName: "Cancel",
           internalName: "cancel",
           onClick: () => {
-            this.closeDialog()
+            this.dialogService.closeDialog()
           }
         },
         {
@@ -130,7 +110,7 @@ export class UserService {
             this.dataService.deleteUser(parseInt(userDetails[0]))
               .pipe(
                 tap(() => {
-                  this.dialogRef?.close("success");
+                  this.dialogService.closeDialog("success");
                   if (onSuccess) {
                     onSuccess();
                   }

@@ -16,10 +16,6 @@ public interface TaskService {
     List<TaskDTO> getAllTasks();
     List<String> getCategories();
     Task getTaskById(long taskId);
-
-//    Task getTaskByStatus(TaskStatus status);
-//    Task getTaskByCategory(TaskCategory category);
-//    Task getTaskByDueDate(LocalDateTime dueDate);
     Task saveTask(Task task);
     Task saveTask(TaskRequest task);
     Map<String, String> deleteTask(long taskId);
