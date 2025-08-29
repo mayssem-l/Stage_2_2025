@@ -5,13 +5,14 @@ export interface DialogFormConfig {
 }
 
 export interface Field {
-    id: number,
+    id: number | string,
     displayName: string,
     internalName: string,
     value: string,
     hidden?: boolean,
-    readonly?: boolean
+    readonly?: boolean,
 }
+
 
 export interface Action {
     id: number,

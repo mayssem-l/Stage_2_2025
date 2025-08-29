@@ -1,34 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
 import { Router } from '@angular/router';
 import { DataService } from '../../services/data-service';
 import { forkJoin, of, switchMap } from 'rxjs';
+import { Field } from '../../types/DialogFormConfig';
+import { InputField } from '../../types/InputField';
 
 @Component({
-  selector: 'app-login-form',
+  selector: 'app-form',
   imports: [
     FormsModule
   ],
-  templateUrl: './login-form.html',
-  styleUrl: './login-form.scss'
+  templateUrl: './form.html',
+  styleUrl: './form.scss'
 })
 export class LoginForm {
-  userForm = {
-    username: '',
-    password: '',
-  };
+  @Input() form: InputField[] = [];
 
-  constructor(
-    private dataService: DataService,
-    private authService: AuthService
-  ) { }
+  dataService = inject(DataService);
+  authService = inject(AuthService);
 
   onLogin() {
     return this.dataService
       .login(
-        this.userForm.username,
-        this.userForm.password
+        this.form[0].value,
+        this.form[1].value,
       )
       .subscribe((res) => {
         localStorage.setItem("token", res.token);
