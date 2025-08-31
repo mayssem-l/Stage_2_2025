@@ -1,9 +1,11 @@
+$overview-page-background-color: rgb(35, 64, 102);
+
 .overview-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #f5f6fa;
-  font-family: 'Segoe UI', sans-serif;
+  background-color: $overview-page-background-color;
+  padding: 24px;
 }
 
 .overview-header {

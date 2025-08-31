@@ -9,6 +9,7 @@ import com.arabsoft.todo_app.service.Interface.AuthService;
 import com.arabsoft.todo_app.service.Interface.TaskService;
 import com.arabsoft.todo_app.service.Interface.UserService;
 import com.arabsoft.todo_app.util.jwt.JWTService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +51,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
+    public ResponseEntity<?> register(@Valid @RequestBody User user) {
         try {
             this.authService.register(user);
             return ResponseEntity.ok(Map.of("message", "User registered successfully"));

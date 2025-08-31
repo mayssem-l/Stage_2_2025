@@ -5,6 +5,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -16,12 +18,22 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
+
+    @NotBlank(message = "First Name cannot be empty.")
     private String firstname;
+
+    @NotBlank(message = "Last Name cannot be empty.")
     private String lastname;
+
     @Column(unique = true, nullable = false)
+    @NotBlank(message = "Username Name cannot be empty.")
     private String username;
+
     @Column(unique = true, nullable = false)
+    @NotBlank(message = "E-mail cannot be empty.")
     private String email;
+
+    @NotBlank(message = "Password cannot be empty.")
     private String password;
 
     @Enumerated(EnumType.ORDINAL)

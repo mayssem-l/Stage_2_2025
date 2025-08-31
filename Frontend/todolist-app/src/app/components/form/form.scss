@@ -1,8 +1,8 @@
-.login-form-wrapper {
+.form-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  .login-form {
+  .form {
     display: flex;
     flex-direction: column;
     gap: 60px;
@@ -15,11 +15,11 @@
     // padding: 50px;
     width: 500px;
     // max-width: 400px;
-    .login-form-header {
+    .form-header {
       display: flex;
       flex-direction: column;
       gap: 20px;
-      .login-title {
+      .title {
         display: flex;
         padding-left: 16px;
         text-align: left;
@@ -29,7 +29,7 @@
       }
     }
 
-    .login-form-body {
+    .form-body {
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -54,7 +54,22 @@
           }
         }
       }
-      .login-button {
+
+      .form-action-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        .form-action {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          .form-action-message {
+            padding-left: 8px;
+          }
+        }
+      }
+
+      .primary-button {
         width: 100%;
         padding: 0.7rem;
         background-color: #007bff;
@@ -71,37 +86,24 @@
         }
       }
 
+      .secondary-button {
+        padding: 0.7rem;
+        border-radius: 30px;
+        border: 1px solid white;
+        background-color: transparent;
+        color: white;
+        transition: background-color 200ms ease;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgb(255 255 255 / 25%);
+        }
+      }
+
       .error-message {
         margin-top: 1rem;
         color: red;
         text-align: center;
-      }
-
-      .login-form-register-section {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        margin-top: 18px;
-
-        span {
-          padding-left: 16px;
-          font-size: 13px;
-          color: lightgray;
-        }
-
-        .register-button {
-          padding: 0.7rem;
-          border-radius: 30px;
-          border: 1px solid white;
-          background-color: transparent;
-          color: white;
-          transition: background-color 200ms ease;
-          cursor: pointer;
-
-          &:hover {
-            background-color: rgb(255 255 255 / 25%);
-          }
-        }
       }
     }
   }

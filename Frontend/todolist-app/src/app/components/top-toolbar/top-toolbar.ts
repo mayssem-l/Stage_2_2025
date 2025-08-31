@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
-import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-top-toolbar',
@@ -9,7 +9,8 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
   styleUrl: './top-toolbar.scss'
 })
 export class TopToolbar {
-  username = 'John'; // Replace with real dynamic username
+  
+  username = localStorage.getItem("username");
 
 
   viewProfile() {

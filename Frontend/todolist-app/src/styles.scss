@@ -65,6 +65,13 @@ app-login {
   line-height: normal;
 }
 
+.fade-in {
+  opacity: 0;
+  animation-name: fade-in-anim;
+  animation-duration: 400ms;
+  animation-fill-mode: forwards;
+}
+
 .cdk-overlay-backdrop {
   backdrop-filter: blur(2px);
 }
@@ -72,4 +79,33 @@ app-login {
 @font-face {
   font-family: "Inter";
   src: url("assets/fonts/Inter.ttf");
+}
+
+@font-face {
+  font-family: "Material Symbols Outlined";
+  src: url("assets/icons/material-symbols-outlined.woff2") format("woff2");
+}
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -moz-font-feature-settings: "liga";
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes fade-in-anim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

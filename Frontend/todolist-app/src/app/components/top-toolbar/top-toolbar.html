@@ -1,14 +1,18 @@
 <div class="top-toolbar-wrapper">
   <div class="top-toolbar-left-section">
     <div class="logo-container">
-      <mat-icon>add_task</mat-icon>
-      <h1 class="app-name">My To-Do List</h1>
-      <h1 class="welcome-message">Welcome, {{ username }}. Time to pretend we’re organized! </h1>
+      <span class="material-symbols-outlined app-logo">task</span>
+      <span class="app-name">Mindr</span>
     </div>
   </div>
 
-  <div class="top-toolbar-right-section" [matMenuTriggerFor]="profileMenu" class="logout-container">
-    <mat-icon>account_circle</mat-icon>
+  <div class="top-toolbar-middle-section"></div>
+
+  <div class="top-toolbar-right-section">
+    <div [matMenuTriggerFor]="profileMenu" class="profile">
+      <span class="username">{{username}}</span>
+      <mat-icon>account_circle</mat-icon>
+    </div>
   </div>
 
   <!-- Dropdown Menu -->

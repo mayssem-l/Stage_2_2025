@@ -3,8 +3,8 @@ export interface User {
   username?: string;
   firstname?: string;
   lastname?: string;
-  name?: string; // tu peux soit supprimer ça, soit le garder si tu l'utilises ailleurs
+  name?: string;
   email?: string;
   role?: string;
-  password?: string; // facultatif (explication ci-dessous)
+  password?: string; 
 }

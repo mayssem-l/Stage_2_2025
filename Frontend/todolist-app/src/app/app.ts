@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { TopToolbar } from './components/top-toolbar/top-toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { LoginForm } from './components/form/form';
+import { Form } from './components/form/form';
 import { Register } from './components/register/register';
 import { DataService } from './services/data-service';
 import { UserRole } from './enums/UserRoles';
@@ -19,7 +19,7 @@ import { DialogForm } from './components/dialog-form/dialog-form';
     RouterOutlet,
     TopToolbar,
     MatIconModule,
-    LoginForm,
+    Form,
     Register,
     Dashboard,
     Overview,

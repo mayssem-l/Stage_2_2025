@@ -6,6 +6,7 @@ import { DataService } from '../../services/data-service';
 import { forkJoin, of, switchMap } from 'rxjs';
 import { Field } from '../../types/DialogFormConfig';
 import { InputField } from '../../types/InputField';
+import { FormConfig } from '../../types/Form';
 
 @Component({
   selector: 'app-form',
@@ -15,22 +16,12 @@ import { InputField } from '../../types/InputField';
   templateUrl: './form.html',
   styleUrl: './form.scss'
 })
-export class LoginForm {
-  @Input() form: InputField[] = [];
+export class Form {
+  @Input() form: FormConfig = {} as FormConfig;
 
-  dataService = inject(DataService);
-  authService = inject(AuthService);
-
-  onLogin() {
-    return this.dataService
-      .login(
-        this.form[0].value,
-        this.form[1].value,
-      )
-      .subscribe((res) => {
-        localStorage.setItem("token", res.token);
-        localStorage.setItem("userId", res.userId)
-        this.authService.validateToken();
-      })
+  onEnterPress(e: KeyboardEvent) {
+    if (e.key == "Enter") {
+      this.form.onSubmit();
+    }
   }
 }

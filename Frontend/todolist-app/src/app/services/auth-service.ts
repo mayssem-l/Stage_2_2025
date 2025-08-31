@@ -19,10 +19,13 @@ export class AuthService {
     return this.dataService.validateToken()
       .subscribe({
         next: res => {
+          if (!localStorage.getItem("username")) {
+            localStorage.setItem("username", res.username);
+          }
           this.redirectByRole(res.roles);
         },
         error: (error) => {
-          
+
         }
       });
   }

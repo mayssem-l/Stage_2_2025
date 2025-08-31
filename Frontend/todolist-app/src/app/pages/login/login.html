@@ -1,22 +1,45 @@
 <div class="login-page-wrapper">
   <div class="login-page">
-    <div class="login-page-left-section">
-      <app-form [form]="loginForm" />
+    <div class="login-page-left-section-wrapper">
+      @if (isNewUser) {
+      <div class="login-page-left-section fade-in">
+        <div class="login-page-left-section-header">
+          <span class="title">CREATE YOUR</span>
+          <span class="title">ACCOUNT NOW!</span>
+        </div>
+        <app-form [form]="registerForm" />
+      </div>
+      }
+      @else {
+      <div class="login-page-left-section fade-in">
+        <div class="login-page-left-section-header">
+          <span class="title">SIGN IN</span>
+          <span class="title">TO YOUR ACCOUNT</span>
+        </div>
+        <app-form [form]="loginForm" />
+      </div>
+      }
     </div>
-    <div class="login-page-separator"></div>
-    <div class="login-page-right-section">
-      <app-anim-bg />
-      <div class="login-page-welcome-message">
-        <span class="login-page-message">Welcome to Mindr!</span>
-        <span>
-          Stay organized and get things done. <br />
-          Log in to manage your tasks anytime, anywhere.
-        </span>
-        <span>
-          Your goals, your progress. <br />
-          All in one place.
-        </span>
+
+    <div class="login-page-right-section-wrapper">
+      <div class="login-page-separator"></div>
+      <div class="login-page-right-section">
+        <div class="login-page-right-section-content">
+          <app-anim-bg />
+          <div class="login-page-welcome-message">
+            <span class="login-page-message">Welcome to Mindr!</span>
+            <span>
+              Stay organized and get things done. <br />
+              Log in to manage your tasks anytime, anywhere.
+            </span>
+            <span>
+              Your goals, your progress. <br />
+              All in one place.
+            </span>
+          </div>
+        </div>
       </div>
     </div>
+
   </div>
 </div>

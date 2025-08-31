@@ -1,120 +1,69 @@
-//.top-toolbar-wrapper{
-//  display: flex;
-//  align-items: center;
-//  justify-content: space-between;
-//  width: 100%;
-//  padding: 8px;
-//  background-color: rgb(0 0 0 / 10%);
-//}
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 .top-toolbar-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 55px;
+  height: 60px;
   width: 100%;
-  padding: 12px 24px;
-  background: linear-gradient(to right, #4a90e2, #007bff);
-  color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  //font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-family: 'Winky Rough', sans-serif;
-}
+  gap: 8px;
 
-.top-toolbar-wrapper h1 {
-  font-size: 1.5rem;
-  margin: 0;
-}
+  .top-toolbar-left-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-width: 140px;
+    padding: 0 16px;
+    border-radius: 8px;
+    background-color: rgb(255 255 255 / 10%);
 
-.top-toolbar-actions {
-  display: flex;
-  gap: 1rem;
-}
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      height: 100%;
 
-.top-toolbar-actions button {
-  background-color: white;
-  color: #007bff;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+      .app-logo {
+        font-size: 2rem;
+        font-weight: 100;
+        font-variation-settings: "wght" 100 "GRAD" 0;
+      }
 
-.top-toolbar-actions button:hover {
-  background-color: #0056b3;
-  color: white;
-}
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.logo-image {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-}
-.logout-button {
-  background-color: #d9534f;
-  border: none;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-
-  &:hover {
-    background-color: #c9302c;
-  }
-}
-.top-toolbar-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #ccc;
-}
-
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.top-toolbar-right-section {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-.profile-menu-trigger {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
-
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-
-  mat-icon {
-    font-size: 30px; // typical size for material icons
-    line-height: 1;
-    width: 30px;
-    height: 30px;
+      .app-name {
+        font-size: 1.6rem;
+        font-weight: bold;
+      }
+    }
   }
 
-  &:hover {
-    background: #3f2bc0;
+  .top-toolbar-middle-section {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    padding: 0 16px;
+    border-radius: 8px;
+    background-color: rgb(255 255 255 / 10%);
+  }
+
+  .top-toolbar-right-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-width: 200px;
+    border-radius: 8px;
+    background-color: rgb(255 255 255 / 10%);
+    .profile {
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      gap: 8px;
+      cursor: pointer;
+      .username {
+      }
+    }
   }
 }
-

@@ -32,7 +32,7 @@ export class DataService {
   }
 
   register(user: User) {
-    return this.httpClient.post<Response>(`/api/user/register`, user);
+    return this.httpClient.post<Response>(`/api/auth/register`, user);
   }
 
   getAllTasks() {
