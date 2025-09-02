@@ -1,21 +1,30 @@
 <div class="overview-container">
 
   <!-- Header -->
-    <app-top-toolbar/>
+  <app-top-toolbar />
 
   <!-- Contenu principal -->
-  <main class="overview-content">
-    <h2>Votre tableau de bord personnel</h2>
-    <p>Consultez vos tâches, notifications, et plus encore ici.</p>
+  <div class="overview-content">
+    <div class="overview-content-task-list-section">
+      <div class="overview-content-task-list-header">
+        <span class="overview-content-task-list-header-title">Tasks</span>
+        <div class="task-list-header-btn" (click)="addTask()">
+          <span class="material-symbols-outlined task-list-header-btn-icon">add</span>
+          <span class="task-list-header-btn-title">Add</span>
+        </div>
+      </div>
+      <!-- <div class="overview-content-task-list" 
+        [style]="{ 'grid-template-columns': `repeat(${this.taskList.length+1}, auto)` }">
+          @for (task of taskList; track $index) {
+          <div class="overview-content-task">
 
-    <!-- Placeholder pour tes tâches -->
-    <div class="task-summary">
-      <h3>Résumé de vos tâches</h3>
-      <!-- Exemple statique, à remplacer plus tard -->
-      <ul>
-        <li>📝 Tâche 1 - En cours</li>
-        <li>✅ Tâche 2 - Terminée</li>
-      </ul>
+          </div>
+        }
+      </div-->
+      <div class="overview-content-task-list">
+        <app-table [table]="taskTable" />
+      </div>
     </div>
-  </main>
+
+  </div>
 </div>

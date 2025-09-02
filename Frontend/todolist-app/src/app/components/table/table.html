@@ -1,5 +1,5 @@
 @if (this.table.data.slice(1).length > 0) {
-<div class="table-wrapper" [style]="{ 'grid-template-columns': `repeat(${this.table.data[0].length+1}, auto)` }">
+<div class="table-wrapper" [style]="{ 'grid-template-columns': `repeat(${this.table.data[0].length + 1}, auto)` }">
   <div class="table-header">
     @for (header of this.table.data[0]; track $index) {
     <div class="table-cell table-header-cell">
@@ -17,7 +17,7 @@
     <div class="table-body-line">
       @for (cell of tableLine; track $index) {
       <div class="table-cell table-body-cell">
-        <span>{{ cell.toString() }}</span>
+        <span>{{ handleCellFormatting(cell) }}</span>
       </div>
       }
       @if (this.table.entryActions) {

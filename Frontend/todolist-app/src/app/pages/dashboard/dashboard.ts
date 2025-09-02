@@ -46,6 +46,7 @@ export class Dashboard implements OnInit {
   content: DashboardContent = DashboardContent.USER_LIST;
 
   table: TableConfig = {
+    headers: [],
     data: [],
     entryActions: []
   };
@@ -104,10 +105,6 @@ export class Dashboard implements OnInit {
       default:
         break;
     }
-  }
-
-  closeDialog() {
-    this.dialog.closeAll()
   }
 
   fetchData(content: DashboardContent): Observable<any> {

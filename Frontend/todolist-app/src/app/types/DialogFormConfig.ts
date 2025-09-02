@@ -1,6 +1,8 @@
+import { InputField } from "./InputField"
+
 export interface DialogFormConfig {
     title: string,
-    fields: Field[],
+    fields: InputField[],
     actions: Action[]
 }
 

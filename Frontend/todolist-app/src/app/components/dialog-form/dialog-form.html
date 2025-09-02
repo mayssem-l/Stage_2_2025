@@ -9,7 +9,8 @@
             <span>
                 {{field.displayName}}
             </span>
-            <input type="text" value={{field.value}} (change)="onFieldValueChange($event, field)" [readOnly]="field.readonly"/>
+            <input [type]="field.type||'text'" value={{field.value}} (change)="onFieldValueChange($event, field)"
+                [readOnly]="field.readonly" />
         </div>
         }
     </div>

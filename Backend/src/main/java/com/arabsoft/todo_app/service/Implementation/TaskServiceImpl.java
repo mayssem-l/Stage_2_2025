@@ -10,6 +10,10 @@ import com.arabsoft.todo_app.service.Interface.TaskService;
 import com.arabsoft.todo_app.service.Interface.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -34,11 +38,28 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> getAllTasks() {
-        return taskRepository
-                .findAll()
-                .stream()
-                .map(TaskDTO::fromEntity)
-                .toList();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        List<String> roles = auth.getAuthorities().stream().map(role -> role.toString().replace("ROLE_", "")).toList();
+
+        if (roles.contains("ADMIN")) {
+            return taskRepository
+                    .findAll()
+                    .stream()
+                    .map(TaskDTO::fromEntity)
+                    .toList();
+        } else {
+            User user = userService.getUserByUsername(auth.getName());
+            long userId = user.getUserId();
+
+            return taskRepository
+                    .findAllByUserUserId(userId)
+                    .stream()
+                    .map(TaskDTO::fromEntity)
+                    .toList();
+        }
+
+
     }
 
     @Override
@@ -69,7 +90,7 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.save(task);
     }
 
-    public Task saveTask(TaskRequest request){
+    public Task saveTask(TaskRequest request) {
         System.out.println("Entering saveTask for TaskRequest");
         User user = userService.getUserById(request.userId());
         Task task = new Task();

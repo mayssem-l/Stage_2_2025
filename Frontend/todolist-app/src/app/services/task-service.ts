@@ -23,9 +23,9 @@ export class TaskService {
     fields: [
       { displayName: "Title", internalName: "title", value: "" },
       { displayName: "Description", internalName: "description", value: "" },
-      { displayName: "Category", internalName: "category", value: "" },
       { displayName: "Status", internalName: "status", value: "" },
-      { displayName: "Due Date", internalName: "dueDate", value: "" },
+      { displayName: "Category", internalName: "category", value: "" },
+      { displayName: "Due Date", internalName: "dueDate", value: "", type: "datetime-local" },
     ].map((entry, i) => ({ ...entry, id: i })),
     actions: [
       { displayName: "Cancel", internalName: "cancel", onClick: () => { this.dialogService.closeDialog() } },
@@ -76,9 +76,7 @@ export class TaskService {
       .subscribe()
   }
 
-  editTask(taskDetails: string[], onSuccess?: () => unknown) {
-    console.log(taskDetails);
-    
+  editTask(taskDetails: string[], onSuccess?: () => unknown, isUser?: boolean) {
     const dialogConfig = { ...this.addTaskDialogConfig };
 
     dialogConfig.title = "Edit Task";
@@ -87,9 +85,15 @@ export class TaskService {
       ...dialogConfig.fields
     ].map((field, i) => ({ ...field, id: i }))
 
+    if (isUser) {
+      dialogConfig.fields = dialogConfig.fields.filter(field => (!["userId", "username"].includes(field.internalName)))
+    }
+
+
     dialogConfig.actions[1].onClick = () => { this.saveTask(dialogConfig.fields, onSuccess) }
 
-    taskDetails.slice(0, -2).forEach((val, i) => {
+
+    taskDetails.slice(0, isUser ? undefined : -2).forEach((val, i) => {
       dialogConfig.fields[i].value = val;
     })
     this.dialogService.openDialogForm(dialogConfig);

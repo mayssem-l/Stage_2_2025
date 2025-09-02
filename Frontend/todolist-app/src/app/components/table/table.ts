@@ -16,10 +16,15 @@ export class Table implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy() {
+  handleCellFormatting(cell: string) {
+    const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
+    if (dateRegex.test(cell)) {
+      return new Date(cell).toLocaleString("fr-FR");
+    }
+
+    return cell.toString();
   }
 
-
-  // tableHeader = this.data[0];
-  // tableBody = this.data.splice(1);
+  ngOnDestroy() {
+  }
 }
