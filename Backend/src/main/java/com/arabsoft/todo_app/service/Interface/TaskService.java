@@ -1,6 +1,8 @@
 package com.arabsoft.todo_app.service.Interface;
 
 import com.arabsoft.todo_app.dao.entities.Task;
+import com.arabsoft.todo_app.dao.entities.TaskCategory;
+import com.arabsoft.todo_app.dao.entities.TaskStatus;
 import com.arabsoft.todo_app.dto.TaskDTO;
 import com.arabsoft.todo_app.dto.TaskRequest;
 import com.arabsoft.todo_app.dto.TaskSummary;
@@ -14,7 +16,8 @@ import java.util.Map;
 
 public interface TaskService {
     List<TaskDTO> getAllTasks();
-    List<String> getCategories();
+    List<TaskCategory> getCategories();
+    List<TaskStatus> getStatus();
     Task getTaskById(long taskId);
     Task saveTask(Task task);
     Task saveTask(TaskRequest task);

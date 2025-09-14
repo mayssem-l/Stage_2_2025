@@ -1,6 +1,8 @@
 package com.arabsoft.todo_app.controller;
 
 import com.arabsoft.todo_app.dao.entities.Task;
+import com.arabsoft.todo_app.dao.entities.TaskCategory;
+import com.arabsoft.todo_app.dao.entities.TaskStatus;
 import com.arabsoft.todo_app.dto.TaskDTO;
 import com.arabsoft.todo_app.dto.TaskRequest;
 import com.arabsoft.todo_app.dto.TaskSummary;
@@ -31,9 +33,12 @@ public class TaskController {
     }
 
     @GetMapping("/getCategories")
-    public List<String> getCategories() {
+    public List<TaskCategory> getCategories() {
         return taskService.getCategories();
     }
+
+    @GetMapping("/getStatus")
+    public List<TaskStatus> getStatus() {return taskService.getStatus();}
 
     @GetMapping("/getTaskById")
     public Task getTaskById(@RequestParam("id") int id) {

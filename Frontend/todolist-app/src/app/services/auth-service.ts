@@ -1,7 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
 import { UserRole } from '../enums/UserRoles';
 import { DataService } from './data-service';
 
@@ -10,10 +8,8 @@ import { DataService } from './data-service';
 })
 export class AuthService {
 
-  constructor(
-    private dataService: DataService,
-    private router: Router
-  ) { }
+  private dataService = inject(DataService);
+  private router = inject(Router);
 
   validateToken() {
     return this.dataService.validateToken()
@@ -23,9 +19,6 @@ export class AuthService {
             localStorage.setItem("username", res.username);
           }
           this.redirectByRole(res.roles);
-        },
-        error: (error) => {
-
         }
       });
   }

@@ -1,20 +1,17 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MatIconModule } from "@angular/material/icon";
 import { Table } from "../../components/table/table";
-import { DialogForm } from '../../components/dialog-form/dialog-form';
 import { DataService } from '../../services/data-service';
 import { DashboardContent } from '../../enums/DashboardContent';
 import { Util } from '../../util/util';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { DialogFormConfig, Field } from '../../types/DialogFormConfig';
 import { User } from '../../models/User';
-import { concatMap, first, Observable, of, tap } from 'rxjs';
+import { first, Observable, of, tap } from 'rxjs';
 import { Task } from '../../models/Task';
 import { TableConfig } from '../../types/TableConfig';
-import { DialogConfig } from '../../types/DialogConfig';
-import { Dialog } from '../../components/dialog/dialog';
 import { UserService } from '../../services/user-service';
 import { TaskService } from '../../services/task-service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,15 +29,16 @@ export class Dashboard implements OnInit {
 
   readonly dialog = inject(MatDialog);
 
-  constructor(
-    private dataService: DataService,
-    private userService: UserService,
-    private taskService: TaskService
-  ) { }
+    private dataService = inject(DataService);
+    private userService = inject(UserService);
+    private taskService = inject(TaskService);
+    private cookieService = inject(CookieService);
+  
 
   sidebarButtons = [
     { title: "Users", icon: "person", onclick: () => { this.onSidenavBtnClick(DashboardContent.USER_LIST) } },
-    { title: "Tasks", icon: "list_alt", onclick: () => { this.onSidenavBtnClick(DashboardContent.TASK_LIST) } }
+    { title: "Tasks", icon: "list_alt", onclick: () => { this.onSidenavBtnClick(DashboardContent.TASK_LIST) } },
+    { title: "Logout", icon: "logout", onclick: () => { this.onLogout() } }
   ]
 
   content: DashboardContent = DashboardContent.USER_LIST;
@@ -107,14 +105,14 @@ export class Dashboard implements OnInit {
     }
   }
 
-  fetchData(content: DashboardContent): Observable<any> {
+  fetchData(content: DashboardContent): Observable<User[] | Task[]> {
     switch (content) {
       case DashboardContent.USER_LIST:
-        return this.dataService.getAllUsers()
+        return this.dataService.getAllUsers() as Observable<User[]>;
       case DashboardContent.TASK_LIST:
-        return this.dataService.getAllTasks()
+        return this.dataService.getAllTasks() as Observable<Task[]>;
       default:
-        return of(null);
+        return of([]);
     }
   }
 
@@ -158,6 +156,9 @@ export class Dashboard implements OnInit {
   }
 
   onLogout() {
+    this.cookieService.deleteAll();  
+    localStorage.clear();
+    window.location.reload();
     console.log('Logout clicked');
   }
 }

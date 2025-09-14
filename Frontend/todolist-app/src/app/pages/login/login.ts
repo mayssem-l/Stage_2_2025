@@ -5,7 +5,6 @@ import { FormConfig } from '../../types/Form';
 import { DataService } from '../../services/data-service';
 import { AuthService } from '../../services/auth-service';
 import { User } from '../../models/User';
-import { animate, group, query, sequence, style, transition, trigger } from '@angular/animations';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -133,7 +132,14 @@ export class Login {
         localStorage.setItem("userId", res.userId)
         this.authService.validateToken();
       })
-  }
+  //     error: (err) => {
+  //       console.error(err);
+  //       if (err.status === 401) {
+  //         this.toastr.error("Login failed. Please check your credentials and try again.");
+  //         return;
+  //       }
+  // }
+}
 
   onRegisterNewUserClick() {
     this.isNewUser = true;

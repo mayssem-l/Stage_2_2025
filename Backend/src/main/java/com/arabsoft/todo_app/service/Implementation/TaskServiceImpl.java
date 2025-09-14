@@ -1,6 +1,7 @@
 package com.arabsoft.todo_app.service.Implementation;
 
 import com.arabsoft.todo_app.dao.entities.Task;
+import com.arabsoft.todo_app.dao.entities.TaskStatus;
 import com.arabsoft.todo_app.dao.entities.User;
 import com.arabsoft.todo_app.dao.entities.TaskCategory;
 import com.arabsoft.todo_app.dao.repository.TaskRepository;
@@ -63,12 +64,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<String> getCategories() {
-        List<Integer> categoriesIds = taskRepository.getCategories();
-        return categoriesIds.stream()
-                .map(i -> TaskCategory.values()[i].name())
-                .collect(Collectors.toList());
+    public List<TaskCategory> getCategories() {
+        return Arrays.asList(TaskCategory.values());
     }
+    @Override
+    public List<TaskStatus> getStatus(){ return Arrays.asList(TaskStatus.values()); }
 
     @Override
     public Map<String, String> deleteTask(long taskId) {

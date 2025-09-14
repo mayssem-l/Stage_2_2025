@@ -8,7 +8,7 @@
     <div class="overview-content-task-list-section">
       <div class="overview-content-task-list-header">
         <span class="overview-content-task-list-header-title">Tasks</span>
-        <div class="task-list-header-btn" (click)="addTask()">
+        <div class="task-list-header-btn" tabindex="0" (keyup)="addTask()" (click)="addTask()">
           <span class="material-symbols-outlined task-list-header-btn-icon">add</span>
           <span class="task-list-header-btn-title">Add</span>
         </div>

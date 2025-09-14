@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject , Injectable } from '@angular/core';
 import { DialogFormConfig, Field } from '../types/DialogFormConfig';
 import { User } from '../models/User';
 import { first, tap } from 'rxjs';
@@ -14,11 +14,10 @@ import { DataService } from './data-service';
 
 export class UserService {
 
-  constructor(
-    private dataService: DataService,
-    private dialogService: DialogService,
-    private toaster: ToastrService
-  ) { };
+  
+    private dataService = inject(DataService);
+    private dialogService = inject(DialogService);
+    private toaster = inject(ToastrService);
 
   addUserDialogConfig: DialogFormConfig = {
     title: "Add a User",
@@ -64,7 +63,7 @@ export class UserService {
     return method
       .pipe(
         tap(() => {
-          this.dialogService.closeDialog("success");
+          this.dialogService.closeDialog();
           if (onSuccess) {
             onSuccess();
           }
@@ -110,7 +109,7 @@ export class UserService {
             this.dataService.deleteUser(parseInt(userDetails[0]))
               .pipe(
                 tap(() => {
-                  this.dialogService.closeDialog("success");
+                  this.dialogService.closeDialog();
                   if (onSuccess) {
                     onSuccess();
                   }

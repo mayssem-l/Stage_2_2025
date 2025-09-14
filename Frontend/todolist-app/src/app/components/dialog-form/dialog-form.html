@@ -9,14 +9,23 @@
             <span>
                 {{field.displayName}}
             </span>
+            @if (field.type === "select") {
+            <mat-select [(value)]="field.value">
+                @for (option of field.options; track option) {
+                <mat-option [value]="option.value">{{option.displayName}}</mat-option>
+                }
+            </mat-select>
+            }
+            @else {
             <input [type]="field.type||'text'" value={{field.value}} (change)="onFieldValueChange($event, field)"
                 [readOnly]="field.readonly" />
+            }
         </div>
         }
     </div>
     <div class="dialog-form-footer">
         @for (action of data.actions; track $index) {
-        <div class="dialog-form-action" (click)="action.onClick()">
+        <div class="dialog-form-action" tabindex="0" (keyup)="action.onClick()" (click)="action.onClick()">
             @if(action.icon){<mat-icon>{{action.icon}}</mat-icon>}
             <span>{{action.displayName}}</span>
         </div>

@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { DialogFormConfig, Field } from '../types/DialogFormConfig';
 import { DialogService } from './dialog-service';
 import { Task } from '../models/Task';
 import { DataService } from './data-service';
-import { concatMap, first, tap } from 'rxjs';
+import { first, tap } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
@@ -12,19 +12,18 @@ import { ToastrService } from 'ngx-toastr';
 
 export class TaskService {
 
-  constructor(
-    private toaster: ToastrService,
-    private dataService: DataService,
-    private dialogService: DialogService
-  ) { }
+  private toaster = inject(ToastrService);
+  private dataService = inject(DataService);
+  private dialogService = inject(DialogService);
+
 
   addTaskDialogConfig: DialogFormConfig = {
     title: "Add a Task",
     fields: [
       { displayName: "Title", internalName: "title", value: "" },
       { displayName: "Description", internalName: "description", value: "" },
-      { displayName: "Status", internalName: "status", value: "" },
-      { displayName: "Category", internalName: "category", value: "" },
+      { displayName: "Status", internalName: "status", value: "", type: "select", options: [] },
+      { displayName: "Category", internalName: "category", value: "", type: "select", options: [] },
       { displayName: "Due Date", internalName: "dueDate", value: "", type: "datetime-local" },
     ].map((entry, i) => ({ ...entry, id: i })),
     actions: [
@@ -39,7 +38,22 @@ export class TaskService {
         this.saveTask(this.addTaskDialogConfig.fields, onSuccess);
       }
     }
-    this.dialogService.openDialogForm(this.addTaskDialogConfig);
+    this.getCategories()
+      .subscribe(categories => {
+        const categoryField = this.addTaskDialogConfig.fields.find(field => field.internalName === "category");
+        categories.forEach(category=>{          
+          categoryField!.options!.push({displayName: category, value: category})
+        })        
+        this.dialogService.openDialogForm(this.addTaskDialogConfig);
+      })
+    this.getStatus()
+    .subscribe(status => {
+      const statusField = this.addTaskDialogConfig.fields.find(field => field.internalName === "status");
+      status.forEach(status => {
+        statusField!.options!.push({displayName: status, value: status})
+      })
+      this.dialogService.openDialogForm(this.addTaskDialogConfig);
+    })
   }
 
   saveTask(fields: Field[], onSuccess?: () => unknown) {
@@ -60,12 +74,12 @@ export class TaskService {
       };
     }
 
-    let method = this.dataService.saveTask(task);
+    const method = this.dataService.saveTask(task);
 
     method
       .pipe(
         tap(() => {
-          this.dialogService.closeDialog("success");
+          this.dialogService.closeDialog();
           if (onSuccess) {
             onSuccess();
           }
@@ -118,7 +132,8 @@ export class TaskService {
             this.dataService.deleteTask(parseInt(taskDetails[0]))
               .pipe(
                 tap(() => {
-                  this.dialogService.closeDialog("success");
+                  this.dialogService.closeDialog();
+                
                   if (onSuccess) {
                     onSuccess();
                   }
@@ -131,6 +146,13 @@ export class TaskService {
         },
       ].map((action, i) => ({ ...action, id: i }))
     })
+  }
+
+  getCategories() {
+    return this.dataService.getCategories();
+  }
+  getStatus() {
+    return this.dataService.getStatus();
   }
 
 }

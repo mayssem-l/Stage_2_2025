@@ -10,11 +10,11 @@ import { DialogConfig } from '../types/DialogConfig';
 })
 export class DialogService {
 
-  constructor(){}
+  // constructor(){}
   
   readonly dialog = inject(MatDialog);
 
-  dialogRef: MatDialogRef<Dialog | DialogForm> | null = null;
+  private dialogRef?: MatDialogRef<Dialog | DialogForm>;
 
   openDialog(data: DialogConfig) {
     this.dialogRef = this.dialog.open(Dialog, {
@@ -29,8 +29,8 @@ export class DialogService {
     });
   }
 
-  closeDialog(result?: string){
-    return this.dialogRef?.close(result)
+  closeDialog(){    
+    return this.dialog?.closeAll()
   }
 
   closeAllDialogs() {

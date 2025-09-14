@@ -14,7 +14,9 @@ public class Task {
     private long taskId;
     private String title;
     private String description;
-    private TaskStatus status;
+    @Enumerated(EnumType.ORDINAL)
+    private TaskStatus status = TaskStatus.TODO;
+    @Enumerated(EnumType.ORDINAL)
     private TaskCategory category;
     private LocalDateTime dueDate;
 

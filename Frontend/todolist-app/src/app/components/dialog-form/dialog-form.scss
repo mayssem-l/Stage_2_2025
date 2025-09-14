@@ -4,6 +4,7 @@
   padding: 40px;
   background-color: rgb(6 15 42);
   gap: 60px;
+
   .dialog-form-header {
     .dialog-form-header-title {
       padding-left: 16px;
@@ -11,15 +12,18 @@
       font-weight: 600;
     }
   }
+
   .dialog-form-content {
     display: flex;
     flex-direction: column;
     gap: 20px;
+
     .dialog-form-content-field {
       display: flex;
       flex-direction: column;
       gap: 4px;
       font-size: 1.2rem;
+
       span {
         // height: 0;
         color: rgb(173, 195, 255);
@@ -29,6 +33,7 @@
         transition: opacity 200ms ease;
         overflow: hidden;
       }
+
       input {
         font-size: 1rem;
         padding: 8px 16px;
@@ -36,11 +41,21 @@
         border-radius: 20px;
         background-color: transparent;
       }
+
+      mat-select {
+        /* background-color: red; */
+        border-radius: 20px;
+        border: 1px solid rgb(110, 124, 161);
+        height: 35px;
+        padding: 5px 15px;
+      }
     }
   }
+
   .dialog-form-footer {
     display: flex;
     justify-content: space-between;
+
     // gap: 20px;
     .dialog-form-action {
       display: flex;
@@ -50,6 +65,7 @@
       border-radius: 20px;
       cursor: pointer;
       transition: background-color 200ms ease;
+
       &:hover {
         background-color: rgb(255 255 255 / 10%);
       }

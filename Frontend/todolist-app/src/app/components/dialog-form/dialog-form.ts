@@ -1,22 +1,21 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { DialogFormConfig, Field } from '../../types/DialogFormConfig';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from "@angular/material/icon";
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-dialog-form',
-  imports: [MatIconModule],
+  imports: [MatIconModule, MatSelectModule],
   templateUrl: './dialog-form.html',
   styleUrl: './dialog-form.scss'
 })
-export class DialogForm implements OnInit {
+export class DialogForm {
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: DialogFormConfig,
-    private dialogRef: MatDialogRef<DialogForm>
-  ) { }
+  private dialogRef = inject(MatDialogRef<DialogForm>)
 
-  ngOnInit() {
+  // eslint-disable-next-line @angular-eslint/prefer-inject
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogFormConfig) {
 
   }
 

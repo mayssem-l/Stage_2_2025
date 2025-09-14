@@ -13,6 +13,7 @@ export interface Field {
     value: string,
     hidden?: boolean,
     readonly?: boolean,
+    options?: {value: string, displayName: string}[]
 }
 
 
